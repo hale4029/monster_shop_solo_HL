@@ -16,10 +16,6 @@ RSpec.describe "Coupon Show Page" do
   it "access merchant coupon show page" do
     visit merchant_path
     click_on "Manage Coupons"
-    expect(path).to eq(merchant_coupon_path(@merchant))
+    expect(current_path).to eq(merchant_coupons_path)
   end
-
-
-
-
 end
