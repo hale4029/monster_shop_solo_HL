@@ -1,4 +1,5 @@
 <h1><%= @coupons.first.merchant.name %>'s Coupons</h1>
+<ul><h3><%= link_to "Create New Coupon", new_merchant_coupon_path %></h3></ul>
 
 <section class="grid-container">
   <% @coupons.each do |coupon| %>
