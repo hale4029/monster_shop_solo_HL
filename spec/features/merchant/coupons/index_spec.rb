@@ -4,8 +4,6 @@ RSpec.describe "Coupon Show Page" do
   before :each do
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
-    #@item_1 = create(:item, merchant: @merchant)
-    #@item_2 = create(:item, merchant: @merchant)
     @coupon_1 = create(:coupon, merchant_id: @merchant_1.id)
     @coupon_2 = create(:coupon, merchant_id: @merchant_1.id)
     @coupon_3 = create(:coupon, merchant_id: @merchant_2.id)
@@ -28,7 +26,6 @@ RSpec.describe "Coupon Show Page" do
       expect(page).to have_content(@coupon_1.code)
       expect(page).to have_content(@coupon_1.discount)
       expect(page).to have_content(@coupon_1.merchant_id)
-      #click_link("Order Number: #{@order.id}")
     end
 
     within "#coupon-#{@coupon_2.id}" do
@@ -36,13 +33,10 @@ RSpec.describe "Coupon Show Page" do
       expect(page).to have_content(@coupon_2.code)
       expect(page).to have_content(@coupon_2.discount)
       expect(page).to have_content(@coupon_2.merchant_id)
-      #click_link("Order Number: #{@order.id}")
     end
 
     #sad-test
     expect(page).to_not have_css("#coupon-#{@coupon_3.id}")
     expect(page).to_not have_content(@coupon_3.code)
   end
-
-
 end
