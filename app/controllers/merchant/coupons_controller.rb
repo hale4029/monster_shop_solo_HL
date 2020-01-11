@@ -10,12 +10,12 @@ class Merchant::CouponsController < Merchant::BaseController
 
   def create
     merchant = Merchant.find(current_user.merchant_id)
-    coupon = merchant.coupons.create(coupon_params)
-    if coupon.save
-      flash[:success] = "#{coupon.name} created!"
+    @coupon = merchant.coupons.create(coupon_params)
+    if @coupon.save
+      flash[:success] = "#{@coupon.name} created!"
       redirect_to merchant_coupons_path
     else
-      flash[:error] = coupon.errors.full_messages.to_sentence
+      flash[:error] = @coupon.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -25,7 +25,7 @@ class Merchant::CouponsController < Merchant::BaseController
   private
 
   def coupon_params
-    params.require(:coupon).permit(:name, :discount, :code, :merchant_id)
+    params.permit(:name, :discount, :code, :merchant_id)
   end
 
 end
