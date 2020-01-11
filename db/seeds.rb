@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Coupon.destroy_all
 ItemOrder.destroy_all
 Order.destroy_all
 User.destroy_all
@@ -57,3 +58,7 @@ merchant_employee_2 = User.create(name: 'merchant_employee_2', address: 'merchan
 merchant_admin_2 = User.create(name: 'merchant_admin_2', address: 'merchant_admin_address', city: 'merchant_admin_city', state: 'merchant_admin_state', zip: 12345, email: 'merchant_admin_email_2', password: 'p', password_confirmation: 'p', role: 2, merchant: dog_shop)
 
 admin = User.create(name: 'admin', address: 'admin_address', city: 'admin_city', state: 'admin_state', zip: 12345, email: 'admin_email', password: 'p', password_confirmation: 'p', role: 3)
+
+coupon_1 = Coupon.create(name: "Small Discount", discount: 10, code: "123abc", merchant_id: bike_shop.id)
+coupon_2 = Coupon.create(name: "Medium Discount", discount: 20, code: "124abc", merchant_id: bike_shop.id)
+coupon_3 = Coupon.create(name: "Large Discount", discount: 30, code: "125abc", merchant_id: dog_shop.id)
