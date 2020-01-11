@@ -8,6 +8,7 @@
         <p>Code: <%= coupon.code %> </p>
         <p>Discount: <%=number_to_percentage(coupon.discount) %> </p>
         <p>Merchant ID: <%= coupon.merchant_id %> </p>
+        <%= button_to 'Edit', edit_merchant_coupon_path(coupon), method: :get %>
     </section>
   <% end %>
 </section>

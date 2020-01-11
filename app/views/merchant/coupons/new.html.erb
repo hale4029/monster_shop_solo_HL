@@ -1,4 +1,4 @@
-<h1>Create New Item For <%=link_to @coupon.merchant.name, "/merchants/#{@coupon.merchant.id}" %></h1>
+<h1>Create New Coupon For <%=link_to @coupon.merchant.name, "/merchants/#{@coupon.merchant.id}" %></h1>
 
 <center>
   <%= form_tag merchant_coupons_path, method: :post do %>
