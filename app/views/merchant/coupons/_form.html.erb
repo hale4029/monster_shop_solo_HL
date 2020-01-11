@@ -1,0 +1,15 @@
+<%= form_for([@coupon.merchant, @coupon]) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :discount %>
+  <%= f.text_field :discount %>
+
+  <%= f.label :code %>
+  <%= f.text_field :code %>
+
+  <%= f.hidden_field :merchant_id %>
+  <%= hidden_field_tag :merchant_id, @coupon.merchant.id  %>
+
+  <%= f.submit "Submit"  %>
+<% end %>
