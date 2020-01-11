@@ -33,4 +33,21 @@ RSpec.describe "Coupon Show Page" do
       expect(page).to have_content(coupon.merchant_id)
     end
   end
+
+  it "cannot create without correct information -- info remains after error attempt" do
+    visit merchant_coupons_path
+    click_on "Create New Coupon"
+    expect(current_path).to eq(new_merchant_coupon_path)
+
+    fill_in 'Name', with: ''
+    fill_in 'Discount', with: 60
+    fill_in 'Code', with: "crazy1234"
+    click_button "Submit"
+
+    expect(page).to have_content("Name can't be blank")
+    expect(find_field('Name').value).to eq ''
+    expect(find_field('Discount').value).to eq('60.0')
+    expect(find_field('Cod').value).to eq "crazy1234"
+    expect(page).to have_button("Submit")
+  end
 end
