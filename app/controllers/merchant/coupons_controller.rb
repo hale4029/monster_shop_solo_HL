@@ -20,6 +20,21 @@ class Merchant::CouponsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @coupon = Coupon.find(params[:id])
+  end
+
+  def update
+    @coupon = Coupon.find(params[:id])
+    @coupon.update(coupon_params)
+    if @coupon.save
+      flash[:success] = "#{@coupon.name} created!"
+      redirect_to merchant_coupons_path
+    else
+      flash[:error] = @coupon.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
 
 
   private
