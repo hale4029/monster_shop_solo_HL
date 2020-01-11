@@ -1,5 +1,18 @@
 <h1>Create New Item For <%=link_to @coupon.merchant.name, "/merchants/#{@coupon.merchant.id}" %></h1>
 
 <center>
-  <%= render partial: 'form' %>
+  <%= form_tag merchant_coupons_path, method: :post do %>
+    <%= label_tag :name %>
+    <%= text_field_tag :name, "#{@coupon.name}" %>
+
+    <%= label_tag :discount %>
+    <%= text_field_tag :discount, "#{@coupon.discount}" %>
+
+    <%= label_tag :code %>
+    <%= text_field_tag :code, "#{@coupon.code}" %>
+
+    <%= hidden_field_tag :merchant_id, @coupon.merchant.id  %>
+
+    <%= submit_tag "Submit"  %>
+  <% end %>
 </center>
