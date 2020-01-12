@@ -20,6 +20,11 @@
   <% end %>
 </table>
 <h3 align = "right">Total: <%= number_to_currency(cart.total)%></h3>
+<% if cart.coupon != {} %>
+  <h3 align = "right">Discounted Total: <%= number_to_currency(cart.discounted_total)%></h3>
+    <p align = "right">Coupon Name: <%= cart.coupon_object.name %></p>
+    <p align = "right">Coupon Discount: <%= number_to_percentage(cart.coupon_object.discount) %></p>
+<% end %>
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/profile/orders", method: :post do %>
