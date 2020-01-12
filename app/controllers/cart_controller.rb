@@ -15,10 +15,18 @@ class CartController < ApplicationController
       @items = cart.items
       flash.now[:error] = "You must #{view_context.link_to 'register', '/users/register'} or #{view_context.link_to 'log in', login_path} to checkout.".html_safe
     end
+    if !(params[:code].nil?)
+      coupon = Coupon.coupon_lookup(params[:code])
+      cart.add_coupon(coupon.id)
+      @discounted_total = cart.discounted_total
+    elsif !(cart.coupon == {})
+      @discounted_total = cart.discounted_total
+    end
   end
 
   def empty
     session.delete(:cart)
+    session.delete(:coupon)
     redirect_to '/cart'
   end
 
