@@ -36,6 +36,18 @@ class Merchant::CouponsController < Merchant::BaseController
     end
   end
 
+  def destroy
+    coupon = Coupon.find(params[:id])
+    if coupon.status == 'inactive'
+      coupon.destroy
+      flash[:success] = "#{coupon.name} has been deleted."
+      redirect_to merchant_coupons_path
+    else
+      flash[:error] = "Coupon used in an order, unable to delete."
+      redirect_to merchant_coupons_path
+    end
+  end
+
 
   private
 
