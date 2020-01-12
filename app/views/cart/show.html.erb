@@ -44,7 +44,20 @@
     </tr>
   <% end %>
 </table>
+<center>
   <p>Total: <%= number_to_currency(cart.total) %></p>
+  <% if @discounted_total %>
+    <p>Discounted Total: <%= number_to_currency(@discounted_total) %></p>
+  <% end %>
+</center>
+<div>
+<h3>Enter coupon for discounted price(s)</h3>
+<%= form_tag '/cart', method: :get do %>
+  <%= label_tag :code %>
+  <%= text_field_tag :code %>
+  <%= submit_tag "Add Coupon", params: [code: :code] %>
+<% end %>
+</div>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
     <% if current_user %>
       <p><%= link_to "Checkout", "/orders/new", method: :get %></p
