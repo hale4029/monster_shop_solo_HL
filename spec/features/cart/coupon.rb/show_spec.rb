@@ -13,7 +13,7 @@ RSpec.describe 'Cart show' do
 
         @coupon_1 = create(:coupon, discount: 50, merchant_id: @mike.id)
         @coupon_2 = create(:coupon, merchant_id: @mike.id)
-        @coupon_3 = create(:coupon, merchant_id: @meg.id)
+        @coupon_3 = create(:coupon, discount: 25, merchant_id: @meg.id)
 
         visit "/items/#{@paper.id}"
         click_on "Add To Cart"
@@ -53,6 +53,16 @@ RSpec.describe 'Cart show' do
         visit '/cart'
 
         expect(page).to have_content("Discounted Total: $111.00")
+
+        fill_in 'Code', with: @coupon_3.code
+        click_button("Add Coupon")
+
+        expect(page).to have_content("Discounted Total: $97.00")
+
+        visit '/'
+        visit '/cart'
+
+        expect(page).to have_content("Discounted Total: $97.00")
       end
     end
   end
