@@ -59,6 +59,23 @@ RSpec.describe("New Order Page") do
       expect(page).to have_content("Discounted Total: $111.00")
       expect(page).to have_content("Coupon Name: #{@coupon_1.name}")
       expect(page).to have_content("Coupon Discount: #{@coupon_1.discount}")
+
+      name = "Bert"
+      address = "123 Sesame St."
+      city = "NYC"
+      state = "New York"
+      zip = 10001
+
+      fill_in :name, with: name
+      fill_in :address, with: address
+      fill_in :city, with: city
+      fill_in :state, with: state
+      fill_in :zip, with: zip
+
+      click_on "Create Order"
+
+      order = Order.last
+      expect(order.coupon_id).to eq(@coupon_1.id)
     end
   end
 end
