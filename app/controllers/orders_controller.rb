@@ -21,6 +21,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      Coupon.change_status(params[:coupon_id])
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
@@ -51,7 +52,7 @@ class OrdersController <ApplicationController
 
   private
     def order_params
-      if params[:coupon_id].nil?
+      if params[:coupon_id] == [] || params[:coupon_id].nil?
         params.permit(:name, :address, :city, :state, :zip)
       else
         params.permit(:name, :address, :city, :state, :zip, :coupon_id)
