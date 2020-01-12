@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe("New Order Page") do
   describe "When I check out from my cart" do
     before(:each) do
@@ -16,7 +18,7 @@ RSpec.describe("New Order Page") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
     end
-    
+
     it "I see all the information about my current cart" do
       user = create(:user)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -57,7 +59,7 @@ RSpec.describe("New Order Page") do
 
       visit "/cart"
       click_on "Checkout"
-
+      
       expect(page).to have_field(:name)
       expect(page).to have_field(:address)
       expect(page).to have_field(:city)
