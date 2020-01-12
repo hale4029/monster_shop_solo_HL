@@ -11,7 +11,13 @@ class Coupon < ApplicationRecord
   validates :name, uniqueness: true, presence: true
   validates_inclusion_of :discount, in: 1..100
 
+  enum status: [:inactive, :active]
+
   def self.coupon_lookup(code)
     where(code: code).first
+  end
+
+  def self.change_status(id)
+    where(id: id).update(status: 1)
   end
 end
