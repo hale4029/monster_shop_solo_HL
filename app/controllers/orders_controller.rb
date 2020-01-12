@@ -51,7 +51,11 @@ class OrdersController <ApplicationController
 
   private
     def order_params
-      params.permit(:name, :address, :city, :state, :zip)
+      if params[:coupon_id].nil?
+        params.permit(:name, :address, :city, :state, :zip)
+      else
+        params.permit(:name, :address, :city, :state, :zip, :coupon_id)
+      end
     end
 
     def change_order_status_to_cancelled(order)
