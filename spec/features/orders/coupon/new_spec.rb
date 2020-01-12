@@ -73,7 +73,7 @@ RSpec.describe("New Order Page") do
       fill_in :zip, with: zip
 
       click_on "Create Order"
-
+      
       order = Order.last
       expect(order.coupon_id).to eq(@coupon_1.id)
     end
