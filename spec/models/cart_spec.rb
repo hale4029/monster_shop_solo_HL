@@ -9,13 +9,13 @@ RSpec.describe Cart do
     end
 
     it 'add_item(item)' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       result = cart.add_item(@paper)
       expect(result).to eq(1)
     end
 
     it 'total_items' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper)
       cart.add_item(@pencil)
       result = cart.total_items
@@ -23,7 +23,7 @@ RSpec.describe Cart do
     end
 
     it 'items' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       result = cart.items
@@ -31,7 +31,7 @@ RSpec.describe Cart do
     end
 
     it 'subtotal(item)' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
@@ -40,7 +40,7 @@ RSpec.describe Cart do
     end
 
     it 'total' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
@@ -49,7 +49,7 @@ RSpec.describe Cart do
     end
 
     it 'add_quantity(item_id)' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
@@ -58,7 +58,7 @@ RSpec.describe Cart do
     end
 
     it 'subtract_quantity(item_id)' do
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
@@ -68,7 +68,7 @@ RSpec.describe Cart do
 
     it 'limit_reached?(item_id)' do
       pencil_1 = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 2)
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(pencil_1.id.to_s)
@@ -83,7 +83,7 @@ RSpec.describe Cart do
 
     it 'quantity_zero?(item_id)' do
       pencil_1 = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 2)
-      cart = Cart.new(Hash.new(0))
+      cart = Cart.new(Hash.new(0), Hash.new(0))
       cart.add_item(pencil_1.id.to_s)
       cart.add_item(pencil_1.id.to_s)
       result = cart.quantity_zero?(pencil_1.id.to_s)
