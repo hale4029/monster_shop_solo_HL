@@ -26,7 +26,7 @@ RSpec.describe "Coupon Edit Page" do
     expect(current_path).to eq(edit_merchant_coupon_path(@coupon_1))
   end
 
-  it "cannot create without correct/missing information -- info remains after error attempt" do
+  it "cannot create with incorrect or missing information -- info remains after error attempt" do
     visit edit_merchant_coupon_path(@coupon_1)
 
     expect(find_field('Name').value).to eq @coupon_1.name
