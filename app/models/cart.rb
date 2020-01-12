@@ -12,6 +12,10 @@ class Cart
     @contents[item] += 1
   end
 
+  def coupon_object
+    Coupon.find(@coupon['coupon'])
+  end
+
   def add_coupon(coupon_id)
     @coupon['coupon'] = coupon_id
   end
