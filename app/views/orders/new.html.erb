@@ -25,6 +25,7 @@
     <p align = "right">Coupon Name: <%= cart.coupon_object.name %></p>
     <p align = "right">Coupon Discount: <%= number_to_percentage(cart.coupon_object.discount) %></p>
 <% end %>
+
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/profile/orders", method: :post do %>
@@ -42,6 +43,8 @@
 
     <%= label_tag :zip %>
     <%= number_field_tag :zip %>
+
+    <%= hidden_field_tag :coupon_id, cart.coupon['coupon']  %>
 
     <%= submit_tag 'Create Order' %>
   <% end %>
