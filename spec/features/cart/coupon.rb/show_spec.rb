@@ -64,6 +64,31 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Discounted Total: $97.00")
       end
+
+      it "incorrect coupon code" do
+        visit '/cart'
+
+        @items_in_cart.each do |item|
+          within "#cart-item-#{item.id}" do
+            expect(page).to have_link(item.name)
+            expect(page).to have_css("img[src*='#{item.image}']")
+            expect(page).to have_link("#{item.merchant.name}")
+            expect(page).to have_content("$#{item.price}")
+            expect(page).to have_content("1")
+            expect(page).to have_content("$#{item.price}")
+          end
+        end
+        expect(page).to have_content("Total: $122")
+        expect(page).to_not have_content("Discounted Total: ")
+
+        fill_in 'Code', with: "WRONGCODE"
+        click_button("Add Coupon")
+        expect(current_path).to eq('/cart')
+
+        expect(page).to have_content("Total: $122")
+        expect(page).to have_content("Coupon code does not exist.")
+        expect(page).to_not have_content("Discounted Total: $111.00")
+      end
     end
   end
 end
