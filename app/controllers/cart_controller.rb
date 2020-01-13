@@ -15,13 +15,7 @@ class CartController < ApplicationController
       @items = cart.items
       flash.now[:error] = "You must #{view_context.link_to 'register', '/users/register'} or #{view_context.link_to 'log in', login_path} to checkout.".html_safe
     end
-    if !(params[:code].nil?)
-      coupon = Coupon.coupon_lookup(params[:code])
-      cart.add_coupon(coupon.id)
-      @discounted_total = cart.discounted_total
-    elsif !(cart.coupon == {})
-      @discounted_total = cart.discounted_total
-    end
+    coupon_procedure(params[:code])
   end
 
   def empty
@@ -49,5 +43,20 @@ class CartController < ApplicationController
 
   def require_not_admin
     render file: '/public/404'unless !current_admin?
+  end
+
+  def coupon_procedure(code)
+    if !(code.nil?)
+      coupon = Coupon.coupon_lookup(code)
+      if coupon.nil?
+        flash[:error] = "Coupon code does not exist."
+        render :show
+      else
+        cart.add_coupon(coupon.id)
+        @discounted_total = cart.discounted_total
+      end
+    elsif !(cart.coupon == {})
+      @discounted_total = cart.discounted_total
+    end
   end
 end
