@@ -95,5 +95,31 @@ RSpec.describe Cart do
       result = cart.quantity_zero?(pencil_1.id.to_s)
       expect(result).to eq(true)
     end
+
+    it "discounted total" do
+      pencil_1 = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 10, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 2)
+      cart = Cart.new(Hash.new(0), Hash.new(0))
+      coupon = create(:coupon, discount: 50, merchant_id: @mike.id)
+      cart.add_item(pencil_1.id.to_s)
+      cart.add_coupon(coupon.id)
+      result = cart.discounted_total
+      expect(result).to eq(5)
+    end
+
+    it 'add_coupon(coupon_id)' do
+      coupon = create(:coupon)
+      cart = Cart.new(Hash.new(0), Hash.new(0))
+      cart.add_coupon(coupon.id)
+      expect(cart.coupon['coupon']).to eq(coupon.id)
+    end
+
+    it 'coupon_object' do
+      coupon = create(:coupon)
+      cart = Cart.new(Hash.new(0), Hash.new(0))
+      cart.add_coupon(coupon.id)
+      expect(cart.coupon_object).to eq(coupon)
+    end
+
+
   end
 end
