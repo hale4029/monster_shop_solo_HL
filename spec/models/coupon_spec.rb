@@ -15,4 +15,22 @@ describe Coupon, type: :model do
     it { should have_many :orders }
   end
 
+  describe "model methods" do
+    before :each do
+      mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @coupon = create(:coupon, discount: 50, merchant_id: mike.id)
+    end
+    
+    it "self.coupon_lookup(code)" do
+      result = Coupon.coupon_lookup(@coupon.code)
+      expect(result).to eq(@coupon)
+    end
+
+    it "self.change_status(id)" do
+      expect(@coupon.status).to eq('inactive')
+      Coupon.change_status(@coupon.id)
+      expect(Coupon.find(@coupon.id).status).to eq('active')
+    end
+  end
+
 end
