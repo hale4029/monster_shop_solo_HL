@@ -37,6 +37,7 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:user_id)
     session.delete(:cart)
+    session.delete(:coupon)
     flash[:success] = "Goodbye, you are now logged out."
     redirect_to '/'
   end
