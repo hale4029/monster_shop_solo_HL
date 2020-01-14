@@ -11,8 +11,12 @@ class Merchant::CouponsController < Merchant::BaseController
   def create
     merchant = Merchant.find(current_user.merchant_id)
     @coupon = merchant.coupons.create(coupon_params)
-    if @coupon.save
+    max_amount = Coupon.max_coupon_amount(@coupon.merchant_id)
+    if @coupon.save && max_amount
       flash[:success] = "#{@coupon.name} created!"
+      redirect_to merchant_coupons_path
+    elsif !max_amount
+      flash[:error] = "Coupon creation limit of five reached."
       redirect_to merchant_coupons_path
     else
       flash[:error] = @coupon.errors.full_messages.to_sentence
