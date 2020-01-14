@@ -20,7 +20,7 @@ describe Coupon, type: :model do
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @coupon = create(:coupon, discount: 50, merchant_id: mike.id)
     end
-    
+
     it "self.coupon_lookup(code)" do
       result = Coupon.coupon_lookup(@coupon.code)
       expect(result).to eq(@coupon)
@@ -30,6 +30,16 @@ describe Coupon, type: :model do
       expect(@coupon.status).to eq('inactive')
       Coupon.change_status(@coupon.id)
       expect(Coupon.find(@coupon.id).status).to eq('active')
+    end
+
+    it "self.check_single_usage(code, user_id)" do
+      user = create(:user)
+      coupon = create(:coupon)
+      result = Coupon.check_single_usage(coupon.code, user.id)
+      expect(result).to eq(false)
+      create(:order, user: user, coupon_id: coupon.id)
+      result = Coupon.check_single_usage(coupon.code, user.id)
+      expect(result).to eq(true)
     end
   end
 
