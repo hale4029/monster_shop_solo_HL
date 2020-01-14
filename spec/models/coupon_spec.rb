@@ -41,6 +41,20 @@ describe Coupon, type: :model do
       result = Coupon.check_single_usage(coupon.code, user.id)
       expect(result).to eq(true)
     end
+
+    it "Coupon.max_coupon_amount(@coupon.merchant_id)" do
+      mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      create(:coupon, merchant_id: mike.id)
+      create(:coupon, merchant_id: mike.id)
+      create(:coupon, merchant_id: mike.id)
+      create(:coupon, merchant_id: mike.id)
+      create(:coupon, merchant_id: mike.id)
+      result = Coupon.max_coupon_amount(mike.id)
+      expect(result).to eq(true)
+      create(:coupon, merchant_id: mike.id)
+      result = Coupon.max_coupon_amount(mike.id)
+      expect(result).to eq(false)
+    end
   end
 
 end
