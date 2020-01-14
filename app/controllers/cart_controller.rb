@@ -51,6 +51,9 @@ class CartController < ApplicationController
       if coupon.nil?
         flash[:error] = "Coupon code does not exist."
         render :show
+      elsif Coupon.check_single_usage(code, current_user.id)
+        flash[:error] = "Coupon code perviously used by user."
+        render :show
       else
         cart.add_coupon(coupon.id)
         @discounted_total = cart.discounted_total
