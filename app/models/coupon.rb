@@ -20,4 +20,9 @@ class Coupon < ApplicationRecord
   def self.change_status(id)
     where(id: id).update(status: 1)
   end
+
+  def self.check_single_usage(code, user_id)
+    id = self.coupon_lookup(code).id
+    Order.where(user_id: user_id).where(coupon_id: id).length > 0
+  end
 end
