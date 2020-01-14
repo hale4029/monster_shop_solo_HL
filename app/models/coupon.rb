@@ -25,4 +25,8 @@ class Coupon < ApplicationRecord
     id = self.coupon_lookup(code).id
     Order.where(user_id: user_id).where(coupon_id: id).length > 0
   end
+
+  def self.max_coupon_amount(merchant_id)
+    where(merchant_id: merchant_id).count <= 5
+  end
 end
