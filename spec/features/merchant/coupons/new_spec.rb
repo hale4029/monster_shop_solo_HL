@@ -73,4 +73,21 @@ RSpec.describe "Create Coupon Page" do
     expect(find_field('Code').value).to eq "crazy1234"
     expect(page).to have_button("Submit")
   end
+
+  it "five coupon creation max" do
+    create(:coupon, merchant_id: @merchant_1.id)
+    create(:coupon, merchant_id: @merchant_1.id)
+    create(:coupon, merchant_id: @merchant_1.id)
+
+    visit merchant_coupons_path
+    click_on "Create New Coupon"
+
+    fill_in 'Name', with: "Huge Discount"
+    fill_in 'Discount', with: 60
+    fill_in 'Code', with: "crazy1234"
+    click_button "Submit"
+
+    expect(current_path).to eq(merchant_coupons_path)
+    expect(page).to have_content("Coupon creation limit of five reached.")
+  end
 end
