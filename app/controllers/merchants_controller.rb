@@ -14,7 +14,7 @@ class MerchantsController <ApplicationController
   def create
     merchant = Merchant.create(merchant_params)
     if merchant.save
-      redirect_to merchants_path
+      redirect_to "/merchants"
     else
       flash[:error] = merchant.errors.full_messages.to_sentence
       render :new

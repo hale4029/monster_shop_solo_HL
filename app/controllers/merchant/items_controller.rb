@@ -12,11 +12,11 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
     @item = @merchant.items.create(item_params)
     if @item.save
-      if params[:item][:image] == ""
+      if params[:image] == ""
         @item.update(image: default_image)
       end
       flash[:success] = "Item added!"
-      redirect_to merchant_items_path
+      redirect_to '/merchant/items'
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :new
@@ -45,7 +45,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:id])
     item.destroy
     flash[:success] = "#{item.name} has been deleted."
-    redirect_to merchant_items_path
+    redirect_to '/merchant/items'
   end
 
   private
@@ -70,7 +70,8 @@ class Merchant::ItemsController < Merchant::BaseController
     end
 
     def item_params
-      params.require(:item).permit(:name, :description, :price, :image, :inventory)
+      #params.require(:item).permit(:name, :description, :price, :image, :inventory)
+      params.permit(:name, :description, :price, :image, :inventory)
     end
 
     def default_image
@@ -84,10 +85,11 @@ class Merchant::ItemsController < Merchant::BaseController
         activate(item)
       end
 
-      redirect_to merchant_items_path
+      redirect_to '/merchant/items'
     end
 
     def update_item_info(item)
+      require "pry"; binding.pry
       if item.update(item_params)
         if params[:item][:image] == ""
           item.update(image: default_image)

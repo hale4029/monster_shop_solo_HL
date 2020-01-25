@@ -8,7 +8,7 @@ class OrdersController <ApplicationController
   end
 
   def show
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:id])
   end
 
   def create
@@ -33,7 +33,7 @@ class OrdersController <ApplicationController
   end
 
   def destroy
-    order = Order.find(params[:order_id])
+    order = Order.find(params[:id])
     if order.status == 'pending'
       order.item_orders.change_status_to_unfulfilled
       reset_inventory(order)
